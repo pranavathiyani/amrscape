@@ -1,17 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AMRscape — ESKAPE Resistome Comparison</title>
+  <meta name="description" content="AMRscape: Interactive comparison of antibiotic resistance profiles across ESKAPE pathogens. Powered by CARD, UniProt, STRING and WHO AWARE 2025."/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦠</text></svg>"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ── WELCOME OVERLAY (first visit only) ──────────────────────────── -->
+<div class="welcome-overlay" id="welcome-overlay">
+  <div class="welcome-modal">
+    <div class="welcome-icon">🧬</div>
+    <h2 class="welcome-title">AMRscape</h2>
+    <p class="welcome-sub">ESKAPE Resistome Comparison Explorer</p>
+    <div class="welcome-steps">
+      <div class="wstep">
+        <span class="wstep-n">1</span>
+        <div>
+          <strong>Pick two ESKAPE pathogens</strong> from the dropdowns at the top to compare their antibiotic resistance profiles.
+        </div>
+      </div>
+      <div class="wstep">
+        <span class="wstep-n">2</span>
+        <div>
+          <strong>Explore the charts</strong> — radar profiles, drug class coverage, WHO AWARE tier exposure, mobilization breakdown, and more.
+        </div>
+      </div>
+      <div class="wstep">
+        <span class="wstep-n">3</span>
+        <div>
+          <strong>Check the comparison zone</strong> for the Venn overlap, Therapeutic Escape Index (★ novel metric), and clinical risk indicators.
+        </div>
+      </div>
+    </div>
+    <button class="welcome-btn" id="welcome-btn">Get Started →</button>
+    <label class="welcome-skip">
+      <input type="checkbox" id="welcome-skip-cb"/> Don't show again
+    </label>
+  </div>
+</div>
+
+<!-- ── HEADER ───────────────────────────────────────────────────────── -->
 <header class="site-header">
   <div class="brand">
     <svg class="brand-icon" viewBox="0 0 28 28" fill="none">
@@ -27,74 +62,86 @@
     </svg>
     <div class="brand-text">
       <span class="brand-name">AMRscape</span>
-      <span class="brand-sub">ESKAPE · CARD · WHO AWARE</span>
+      <span class="brand-sub">ESKAPE · CARD 2025 · WHO AWARE 2025</span>
     </div>
   </div>
 
   <div class="vs-row">
     <div class="sel-block" id="selblock-left">
       <div class="sel-accent" id="sel-accent-left"></div>
-      <select id="dd-left" class="pathogen-sel"></select>
+      <select id="dd-left" class="pathogen-sel" aria-label="Left pathogen"></select>
     </div>
     <div class="vs-center">
       <div class="sim-bar-wrap">
         <div class="sim-bar-track"><div class="sim-bar-fill" id="sim-fill"></div></div>
       </div>
       <div class="vs-score" id="sim-pct">—</div>
-      <div class="vs-score-lbl">Jaccard</div>
+      <div class="vs-score-lbl">Jaccard <span class="info-tip" title="Jaccard similarity = shared ARGs ÷ total unique ARGs. Range: 0 (no overlap) to 1 (identical gene sets).">ⓘ</span></div>
     </div>
     <div class="sel-block" id="selblock-right">
       <div class="sel-accent" id="sel-accent-right"></div>
-      <select id="dd-right" class="pathogen-sel"></select>
+      <select id="dd-right" class="pathogen-sel" aria-label="Right pathogen"></select>
     </div>
   </div>
 
   <div class="hdr-end">
+    <button class="share-btn" id="share-btn" title="Copy shareable link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Share
+    </button>
     <div class="stat-pill" id="hdr-stats">—</div>
-    <button id="theme-btn" class="icon-btn">
+    <button id="theme-btn" class="icon-btn" title="Toggle light/dark">
       <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="i-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
   </div>
 </header>
 
-<!-- SUMMARY STRIP -->
-<div class="sum-strip" id="sum-strip">
+<!-- ── HERO TAGLINE ─────────────────────────────────────────────────── -->
+<div class="hero-bar">
+  <span class="hero-line1">Compare antibiotic resistance profiles across ESKAPE pathogens</span>
+  <span class="hero-sep">·</span>
+  <span class="hero-line2">Select two organisms to explore mechanisms, drug class coverage, and co-infection risk</span>
+</div>
+
+<!-- ── SUMMARY STRIP ─────────────────────────────────────────────────── -->
+<div class="sum-strip">
   <div class="sum-card" id="sc-jaccard"><span class="sc-val">—</span><span class="sc-lbl">ARG Similarity</span></div>
   <div class="sum-sep"></div>
   <div class="sum-card" id="sc-shared"><span class="sc-val">—</span><span class="sc-lbl">Shared ARGs</span></div>
   <div class="sum-sep"></div>
-  <div class="sum-card sc-tei" id="sc-tei" title="Therapeutic Escape Index: % of drug classes where co-infection has no shared susceptibility"><span class="sc-val">—</span><span class="sc-lbl">Ther. Escape Index <sup>★</sup></span></div>
+  <div class="sum-card sc-tei" id="sc-tei">
+    <span class="sc-val">—</span>
+    <span class="sc-lbl">Ther. Escape Index <span class="info-tip" title="Therapeutic Escape Index (TEI): % of drug classes where both pathogens are simultaneously resistant. Novel metric — useful for co-infection treatment planning.">★</span></span>
+  </div>
   <div class="sum-sep"></div>
-  <div class="sum-card" id="sc-hgt"><span class="sc-val">—</span><span class="sc-lbl">HGT-risk Shared ARGs</span></div>
+  <div class="sum-card" id="sc-hgt"><span class="sc-val">—</span><span class="sc-lbl">HGT-risk Shared ARGs <span class="info-tip" title="Shared ARGs that are plasmid/transposon-borne in both pathogens — mobile elements that can transfer between strains in co-infection.">ⓘ</span></span></div>
   <div class="sum-sep"></div>
   <div class="sum-card" id="sc-reserve"><span class="sc-val">—</span><span class="sc-lbl">Reserve Drugs at Risk</span></div>
 </div>
 
-<!-- DUAL PANEL -->
+<!-- ── DUAL PANELS ───────────────────────────────────────────────────── -->
 <div class="dual-panels">
 
   <section class="panel" id="panel-left">
     <div class="panel-top" id="ptop-left"></div>
-
     <div class="panel-section">
-      <div class="sec-label">Resistance Mechanism Profile</div>
+      <div class="sec-label">Resistance Mechanism Profile <span class="info-tip" title="Radar showing how many ARGs use each resistance mechanism. Larger polygon = broader mechanism diversity.">ⓘ</span></div>
       <div class="radar-box" id="radar-left"></div>
     </div>
-
     <div class="panel-row2">
       <div class="panel-section half-sec">
-        <div class="sec-label">WHO AWARE Exposure</div>
+        <div class="sec-label">WHO AWARE Exposure <span class="info-tip" title="Count of unique drugs affected by this pathogen's ARGs, by WHO AWARE tier. Reserve (red) = last-resort drugs.">ⓘ</span></div>
         <div class="donut-box" id="donut-left"></div>
+        <div class="aware-mini-legend"></div>
       </div>
       <div class="panel-section half-sec">
-        <div class="sec-label">Mobilization</div>
+        <div class="sec-label">Mobilization <span class="info-tip" title="How ARGs are carried. Mobile = plasmid/transposon/integron. Chromosomal = fixed in genome.">ⓘ</span></div>
         <div class="donut-box" id="pie-left"></div>
       </div>
     </div>
-
     <div class="panel-section">
-      <div class="sec-label">Drug Class Resistance Map</div>
+      <div class="sec-label">Drug Class Resistance Map <span class="info-tip" title="Each cell = one drug class. Colored = this pathogen has ≥1 ARG conferring resistance. Color = WHO AWARE tier of the worst drug in that class.">ⓘ</span></div>
       <div class="strip-box" id="strip-left"></div>
     </div>
   </section>
@@ -107,56 +154,49 @@
 
   <section class="panel" id="panel-right">
     <div class="panel-top" id="ptop-right"></div>
-
     <div class="panel-section">
-      <div class="sec-label">Resistance Mechanism Profile</div>
+      <div class="sec-label">Resistance Mechanism Profile <span class="info-tip" title="Radar showing how many ARGs use each resistance mechanism. Larger polygon = broader mechanism diversity.">ⓘ</span></div>
       <div class="radar-box" id="radar-right"></div>
     </div>
-
     <div class="panel-row2">
       <div class="panel-section half-sec">
-        <div class="sec-label">WHO AWARE Exposure</div>
+        <div class="sec-label">WHO AWARE Exposure <span class="info-tip" title="Count of unique drugs affected by this pathogen's ARGs, by WHO AWARE tier. Reserve (red) = last-resort drugs.">ⓘ</span></div>
         <div class="donut-box" id="donut-right"></div>
       </div>
       <div class="panel-section half-sec">
-        <div class="sec-label">Mobilization</div>
+        <div class="sec-label">Mobilization <span class="info-tip" title="How ARGs are carried. Mobile = plasmid/transposon/integron. Chromosomal = fixed in genome.">ⓘ</span></div>
         <div class="donut-box" id="pie-right"></div>
       </div>
     </div>
-
     <div class="panel-section">
-      <div class="sec-label">Drug Class Resistance Map</div>
+      <div class="sec-label">Drug Class Resistance Map <span class="info-tip" title="Each cell = one drug class. Colored = this pathogen has ≥1 ARG conferring resistance. Color = WHO AWARE tier of the worst drug in that class.">ⓘ</span></div>
       <div class="strip-box" id="strip-right"></div>
     </div>
   </section>
 
 </div>
 
-<!-- COMPARISON ZONE -->
+<!-- ── COMPARISON ZONE ───────────────────────────────────────────────── -->
 <section class="cmp-zone">
   <div class="cmp-zone-header">
     <h2 class="cmp-zone-title">Comparative Analysis</h2>
     <p class="cmp-zone-sub" id="cmp-sub"></p>
   </div>
-
   <div class="cmp-cards">
     <div class="cmp-card">
-      <div class="cmp-card-title">ARG Overlap (Venn)</div>
+      <div class="cmp-card-title">ARG Overlap (Venn) <span class="info-tip" title="Number of resistance genes unique to each pathogen vs shared between them.">ⓘ</span></div>
       <div id="venn-box" class="venn-box"></div>
       <div id="venn-legend" class="venn-legend"></div>
     </div>
-
     <div class="cmp-card cmp-card-tei">
-      <div class="cmp-card-title">Therapeutic Escape Index <sup>★</sup></div>
+      <div class="cmp-card-title">Therapeutic Escape Index ★ <span class="info-tip" title="★ Novel metric. TEI = % of WHO-recognised drug classes defeated simultaneously in both pathogens. High TEI = co-infection is extremely difficult to treat empirically.">ⓘ</span></div>
       <div id="tei-box" class="tei-box"></div>
       <p class="tei-note" id="tei-note"></p>
     </div>
-
     <div class="cmp-card cmp-card-wide">
-      <div class="cmp-card-title">Mechanism Burden Comparison</div>
+      <div class="cmp-card-title">Mechanism Burden Comparison <span class="info-tip" title="Mirrored bars show how many ARGs use each mechanism per pathogen. Helps identify mechanistic convergence or divergence.">ⓘ</span></div>
       <div id="mech-cmp" class="mech-cmp"></div>
     </div>
-
     <div class="cmp-card">
       <div class="cmp-card-title">Risk Indicators</div>
       <div id="risk-alerts" class="risk-alerts"></div>
@@ -164,32 +204,120 @@
   </div>
 </section>
 
-<!-- GENE CARDS -->
+<!-- ── GENE CARDS ─────────────────────────────────────────────────────── -->
 <section class="genes-sec">
   <div class="genes-sec-header">
     <h2 class="genes-sec-title">Resistance Gene Profiles</h2>
     <div class="genes-legend" id="genes-legend"></div>
   </div>
   <div class="genes-grid">
-    <div class="genes-col" id="gcol-left">
-      <div class="gcol-header" id="gch-left"></div>
+    <div class="genes-col" id="gcol-left"><div class="gcol-header" id="gch-left"></div></div>
+    <div class="genes-col genes-col-shared" id="gcol-shared"><div class="gcol-header gcol-header-shared">⬡ Shared ARGs</div></div>
+    <div class="genes-col" id="gcol-right"><div class="gcol-header" id="gch-right"></div></div>
+  </div>
+</section>
+
+<!-- ── DATA SOURCES ───────────────────────────────────────────────────── -->
+<section class="sources-sec">
+  <h3 class="sources-title">Data Sources</h3>
+  <div class="sources-grid">
+    <a class="source-card" href="https://card.mcmaster.ca" target="_blank" rel="noopener">
+      <div class="source-icon">🗂</div>
+      <div class="source-info">
+        <div class="source-name">CARD 2025</div>
+        <div class="source-desc">Comprehensive Antibiotic Resistance Database — ARO accessions, gene names, resistance mechanisms, curated ESKAPE resistomes</div>
+      </div>
+    </a>
+    <a class="source-card" href="https://rest.uniprot.org" target="_blank" rel="noopener">
+      <div class="source-icon">🧬</div>
+      <div class="source-info">
+        <div class="source-name">UniProt REST API</div>
+        <div class="source-desc">Protein sequences, Pfam domain cross-references and protein names for each AMR gene (live API)</div>
+      </div>
+    </a>
+    <a class="source-card" href="https://string-db.org" target="_blank" rel="noopener">
+      <div class="source-icon">🔗</div>
+      <div class="source-info">
+        <div class="source-name">STRING (live API)</div>
+        <div class="source-desc">Protein–protein interaction scores ≥0.70 used as co-resistance network edges per ESKAPE taxon</div>
+      </div>
+    </a>
+    <a class="source-card" href="https://www.who.int/publications/i/item/B09489" target="_blank" rel="noopener">
+      <div class="source-icon">💊</div>
+      <div class="source-info">
+        <div class="source-name">WHO AWARE 2025</div>
+        <div class="source-desc">Access / Watch / Reserve antibiotic classification. <a href="https://www.who.int/publications/i/item/B09489" target="_blank" style="color:var(--accent)">2025 edition</a> — updated every 2 years by WHO Expert Committee</div>
+      </div>
+    </a>
+    <a class="source-card" href="https://www.who.int/publications/i/item/9789240093461" target="_blank" rel="noopener">
+      <div class="source-icon">⚠️</div>
+      <div class="source-info">
+        <div class="source-name">WHO Priority Pathogens 2024</div>
+        <div class="source-desc">Bacterial pathogens of public health importance — Critical / High priority classification for ESKAPE organisms</div>
+      </div>
+    </a>
+    <div class="source-card source-card-metric">
+      <div class="source-icon">★</div>
+      <div class="source-info">
+        <div class="source-name">Therapeutic Escape Index (TEI) — Novel metric</div>
+        <div class="source-desc">% of WHO-classified drug classes where a co-infection scenario has no shared susceptibility. Computed from CARD + WHO AWARE 2025. Developed for AMRscape.</div>
+      </div>
     </div>
-    <div class="genes-col genes-col-shared" id="gcol-shared">
-      <div class="gcol-header gcol-header-shared">⬡ Shared ARGs</div>
+  </div>
+
+  <!-- CREDIT BANNER -->
+  <div class="credit-banner">
+    <span>🔓 Built entirely on openly and publicly available databases</span>
+    <span class="credit-sep">·</span>
+    <span>Co-developed with Claude 💙</span>
+  </div>
+
+  <!-- CITATION BOX -->
+  <div class="citation-box" id="citation-box">
+    <div class="citation-header">
+      <span class="citation-title">📄 How to cite AMRscape</span>
+      <button class="citation-copy-btn" id="copy-citation">Copy</button>
     </div>
-    <div class="genes-col" id="gcol-right">
-      <div class="gcol-header" id="gch-right"></div>
+    <div class="citation-formats">
+      <div class="citation-tab-row">
+        <button class="ctab active" data-fmt="plain">Plain text</button>
+        <button class="ctab" data-fmt="bibtex">BibTeX</button>
+        <button class="ctab" data-fmt="ris">RIS</button>
+      </div>
+      <div class="citation-text" id="citation-text"></div>
     </div>
   </div>
 </section>
 
+<!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
 <footer class="site-footer">
   <span>AMRscape · ESKAPE Resistome Explorer</span>
   <span class="foot-sep">·</span>
-  <span>CARD · UniProt REST · STRING · WHO AWARE 2021</span>
+  <span>CARD 2025 · UniProt · STRING · WHO AWARE 2025 · WHO Priority Pathogens 2024</span>
   <span class="foot-sep">·</span>
   <span id="foot-meta"></span>
+  <span class="foot-sep">·</span>
+  <span class="foot-credit">Built on openly available databases · Co-developed with Claude 💙</span>
+  <span class="foot-sep">·</span>
+  <span class="easter-egg" id="easter-egg" title="🥚">🥚</span>
 </footer>
+
+<!-- ── EASTER EGG ─────────────────────────────────────────────────────── -->
+<div class="egg-overlay" id="egg-overlay">
+  <div class="egg-modal">
+    <div class="egg-crack" id="egg-crack">🥚</div>
+    <div class="egg-reveal" id="egg-reveal">
+      <div class="egg-name">Pranavathiyani G</div>
+      <div class="egg-role">Assistant Professor (Research) · SASTRA Deemed to be University</div>
+      <div class="egg-sub">Bioinformatics · AMR · Multi-omics · AI/ML Drug Discovery</div>
+      <a class="egg-link" href="https://pranavathiyani.github.io" target="_blank" rel="noopener">pranavathiyani.github.io ↗</a>
+      <button class="egg-close" id="egg-close">close ✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SHARE TOAST ─────────────────────────────────────────────────────── -->
+<div class="share-toast" id="share-toast">🔗 Link copied to clipboard!</div>
 
 <div id="tt" class="tt hidden"></div>
 
