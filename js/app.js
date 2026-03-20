@@ -336,14 +336,13 @@ const App = (() => {
   author    = {Pranavathiyani G},
   title     = {{AMRscape}: Interactive {ESKAPE} Resistome Comparison Explorer},
   year      = {2025},
-  howpublished = {\url{https://pranavathiyani.github.io/amrscape/}},
+  note      = {Available at https://pranavathiyani.github.io/amrscape/},
   url       = {https://pranavathiyani.github.io/amrscape/}
 }`,
     ris: `TY  - COMP
 AU  - Pranavathiyani G
 TI  - AMRscape: Interactive ESKAPE Resistome Comparison Explorer
 PY  - 2025
-UR  - https://pranavathiyani.github.io/amrscape/
 UR  - https://pranavathiyani.github.io/amrscape/
 ER  -`
   };
