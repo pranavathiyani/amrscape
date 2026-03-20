@@ -293,7 +293,8 @@ const App = (() => {
     const pB=renderPanel('right',rId);
     renderCompare(pA,pB);
     renderGenes(pA,pB);
-    document.getElementById('footer-meta'||'foot-meta').textContent=
+    const footMeta=document.getElementById('foot-meta');
+    if(footMeta)footMeta.textContent=
       `Graph: ${G.metadata.node_count} nodes · ${G.metadata.edge_count} edges · ${G.metadata.generated?.slice(0,10)}`;
   }
 
