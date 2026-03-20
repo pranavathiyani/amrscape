@@ -285,15 +285,19 @@ const App = (() => {
 
   /* ── Welcome overlay ── */
   function initWelcome(){
-    const overlay=$('welcome-overlay');
+    const overlay = $('welcome-overlay');
     if(!overlay) return;
-    const seen=localStorage.getItem('amrscape-welcomed');
-    if(seen){ overlay.classList.add('hidden'); return; }
+    const seen = localStorage.getItem('amrscape-welcomed');
+    if(seen){ overlay.style.display = 'none'; return; }
 
-    const btn=$('welcome-btn'), cb=$('welcome-skip-cb');
-    if(btn) btn.addEventListener('click',()=>{
-      if(cb?.checked) localStorage.setItem('amrscape-welcomed','1');
-      overlay.classList.add('hidden');
+    const btn = $('welcome-btn'), cb = $('welcome-skip-cb');
+    if(btn) btn.addEventListener('click', ()=>{
+      if(cb && cb.checked) localStorage.setItem('amrscape-welcomed','1');
+      overlay.style.display = 'none';
+    });
+    // Also close on backdrop click
+    overlay.addEventListener('click', e=>{
+      if(e.target === overlay) overlay.style.display = 'none';
     });
   }
 
@@ -386,7 +390,7 @@ ER  -`
     initTheme();
     initWelcome();
     try{
-      const res=await fetch('data/graph.json');
+      const res=await fetch('./data/graph.json');
       if(!res.ok) throw new Error(`HTTP ${res.status}`);
       G=await res.json();
       byId=new Map(G.nodes.map(n=>[n.id,n]));
