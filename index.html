@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AMRscape — ESKAPE Resistome Comparison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="brand">
+    <svg class="brand-icon" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="3.5" fill="currentColor"/>
+      <circle cx="5"  cy="7"  r="2.5" fill="currentColor" opacity=".55"/>
+      <circle cx="23" cy="7"  r="2.5" fill="currentColor" opacity=".55"/>
+      <circle cx="5"  cy="21" r="2.5" fill="currentColor" opacity=".35"/>
+      <circle cx="23" cy="21" r="2.5" fill="currentColor" opacity=".35"/>
+      <line x1="14" y1="10.5" x2="7"  y2="8.5"  stroke="currentColor" stroke-width="1.2" opacity=".4"/>
+      <line x1="14" y1="10.5" x2="21" y2="8.5"  stroke="currentColor" stroke-width="1.2" opacity=".4"/>
+      <line x1="14" y1="17.5" x2="7"  y2="19.5" stroke="currentColor" stroke-width="1.2" opacity=".25"/>
+      <line x1="14" y1="17.5" x2="21" y2="19.5" stroke="currentColor" stroke-width="1.2" opacity=".25"/>
+    </svg>
+    <div class="brand-text">
+      <span class="brand-name">AMRscape</span>
+      <span class="brand-sub">ESKAPE · CARD · WHO AWARE</span>
+    </div>
+  </div>
+
+  <div class="vs-row">
+    <div class="sel-block" id="selblock-left">
+      <div class="sel-accent" id="sel-accent-left"></div>
+      <select id="dd-left" class="pathogen-sel"></select>
+    </div>
+    <div class="vs-center">
+      <div class="sim-bar-wrap">
+        <div class="sim-bar-track"><div class="sim-bar-fill" id="sim-fill"></div></div>
+      </div>
+      <div class="vs-score" id="sim-pct">—</div>
+      <div class="vs-score-lbl">Jaccard</div>
+    </div>
+    <div class="sel-block" id="selblock-right">
+      <div class="sel-accent" id="sel-accent-right"></div>
+      <select id="dd-right" class="pathogen-sel"></select>
+    </div>
+  </div>
+
+  <div class="hdr-end">
+    <div class="stat-pill" id="hdr-stats">—</div>
+    <button id="theme-btn" class="icon-btn">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="i-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- SUMMARY STRIP -->
+<div class="sum-strip" id="sum-strip">
+  <div class="sum-card" id="sc-jaccard"><span class="sc-val">—</span><span class="sc-lbl">ARG Similarity</span></div>
+  <div class="sum-sep"></div>
+  <div class="sum-card" id="sc-shared"><span class="sc-val">—</span><span class="sc-lbl">Shared ARGs</span></div>
+  <div class="sum-sep"></div>
+  <div class="sum-card sc-tei" id="sc-tei" title="Therapeutic Escape Index: % of drug classes where co-infection has no shared susceptibility"><span class="sc-val">—</span><span class="sc-lbl">Ther. Escape Index <sup>★</sup></span></div>
+  <div class="sum-sep"></div>
+  <div class="sum-card" id="sc-hgt"><span class="sc-val">—</span><span class="sc-lbl">HGT-risk Shared ARGs</span></div>
+  <div class="sum-sep"></div>
+  <div class="sum-card" id="sc-reserve"><span class="sc-val">—</span><span class="sc-lbl">Reserve Drugs at Risk</span></div>
+</div>
+
+<!-- DUAL PANEL -->
+<div class="dual-panels">
+
+  <section class="panel" id="panel-left">
+    <div class="panel-top" id="ptop-left"></div>
+
+    <div class="panel-section">
+      <div class="sec-label">Resistance Mechanism Profile</div>
+      <div class="radar-box" id="radar-left"></div>
+    </div>
+
+    <div class="panel-row2">
+      <div class="panel-section half-sec">
+        <div class="sec-label">WHO AWARE Exposure</div>
+        <div class="donut-box" id="donut-left"></div>
+      </div>
+      <div class="panel-section half-sec">
+        <div class="sec-label">Mobilization</div>
+        <div class="donut-box" id="pie-left"></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="sec-label">Drug Class Resistance Map</div>
+      <div class="strip-box" id="strip-left"></div>
+    </div>
+  </section>
+
+  <div class="panel-divider">
+    <div class="divider-line"></div>
+    <span class="divider-vs">VS</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <section class="panel" id="panel-right">
+    <div class="panel-top" id="ptop-right"></div>
+
+    <div class="panel-section">
+      <div class="sec-label">Resistance Mechanism Profile</div>
+      <div class="radar-box" id="radar-right"></div>
+    </div>
+
+    <div class="panel-row2">
+      <div class="panel-section half-sec">
+        <div class="sec-label">WHO AWARE Exposure</div>
+        <div class="donut-box" id="donut-right"></div>
+      </div>
+      <div class="panel-section half-sec">
+        <div class="sec-label">Mobilization</div>
+        <div class="donut-box" id="pie-right"></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="sec-label">Drug Class Resistance Map</div>
+      <div class="strip-box" id="strip-right"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- COMPARISON ZONE -->
+<section class="cmp-zone">
+  <div class="cmp-zone-header">
+    <h2 class="cmp-zone-title">Comparative Analysis</h2>
+    <p class="cmp-zone-sub" id="cmp-sub"></p>
+  </div>
+
+  <div class="cmp-cards">
+    <div class="cmp-card">
+      <div class="cmp-card-title">ARG Overlap (Venn)</div>
+      <div id="venn-box" class="venn-box"></div>
+      <div id="venn-legend" class="venn-legend"></div>
+    </div>
+
+    <div class="cmp-card cmp-card-tei">
+      <div class="cmp-card-title">Therapeutic Escape Index <sup>★</sup></div>
+      <div id="tei-box" class="tei-box"></div>
+      <p class="tei-note" id="tei-note"></p>
+    </div>
+
+    <div class="cmp-card cmp-card-wide">
+      <div class="cmp-card-title">Mechanism Burden Comparison</div>
+      <div id="mech-cmp" class="mech-cmp"></div>
+    </div>
+
+    <div class="cmp-card">
+      <div class="cmp-card-title">Risk Indicators</div>
+      <div id="risk-alerts" class="risk-alerts"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GENE CARDS -->
+<section class="genes-sec">
+  <div class="genes-sec-header">
+    <h2 class="genes-sec-title">Resistance Gene Profiles</h2>
+    <div class="genes-legend" id="genes-legend"></div>
+  </div>
+  <div class="genes-grid">
+    <div class="genes-col" id="gcol-left">
+      <div class="gcol-header" id="gch-left"></div>
+    </div>
+    <div class="genes-col genes-col-shared" id="gcol-shared">
+      <div class="gcol-header gcol-header-shared">⬡ Shared ARGs</div>
+    </div>
+    <div class="genes-col" id="gcol-right">
+      <div class="gcol-header" id="gch-right"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>AMRscape · ESKAPE Resistome Explorer</span>
+  <span class="foot-sep">·</span>
+  <span>CARD · UniProt REST · STRING · WHO AWARE 2021</span>
+  <span class="foot-sep">·</span>
+  <span id="foot-meta"></span>
+</footer>
+
+<div id="tt" class="tt hidden"></div>
+
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

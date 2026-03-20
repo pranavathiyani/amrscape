@@ -1,0 +1,90 @@
+name: Build AMR Knowledge Graph & Deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Rebuild weekly on Monday 02:00 UTC (CARD/UniProt/STRING data refreshes)
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      seed_only:
+        description: "Skip live API calls (faster, uses curated seed only)"
+        required: false
+        default: "false"
+        type: boolean
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('scripts/requirements.txt') }}
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Build graph.json
+        run: |
+          if [ "${{ inputs.seed_only }}" = "true" ]; then
+            python scripts/build_graph.py --seed-only
+          else
+            python scripts/build_graph.py
+          fi
+
+      - name: Show graph stats
+        run: |
+          echo "── graph.json stats ──"
+          python -c "
+          import json
+          g = json.load(open('data/graph.json'))
+          m = g['metadata']
+          print(f'Generated : {m[\"generated\"]}')
+          print(f'Nodes     : {m[\"node_count\"]}')
+          print(f'Edges     : {m[\"edge_count\"]}')
+          by_type = {}
+          for n in g['nodes']:
+              t = n['type']
+              by_type[t] = by_type.get(t, 0) + 1
+          for t, c in sorted(by_type.items()):
+              print(f'  {t:<14} {c}')
+          "
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,1449 @@
+{
+  "metadata": {
+    "generated": "2026-03-19T16:03:55.629868Z",
+    "version": "0.1.0",
+    "sources": [
+      "CARD_curated",
+      "UniProt",
+      "STRING",
+      "WHO_AWARE_2021"
+    ],
+    "seed_only": true,
+    "node_count": 63,
+    "edge_count": 151
+  },
+  "nodes": [
+    {
+      "type": "pathogen",
+      "id": "pathogen:efaecium",
+      "label": "E. faecium",
+      "full_name": "Enterococcus faecium",
+      "taxid": 1352,
+      "who_priority": "High",
+      "eskape": "E1",
+      "gram": "positive"
+    },
+    {
+      "type": "pathogen",
+      "id": "pathogen:saur",
+      "label": "S. aureus",
+      "full_name": "Staphylococcus aureus",
+      "taxid": 1280,
+      "who_priority": "High",
+      "eskape": "S",
+      "gram": "positive"
+    },
+    {
+      "type": "pathogen",
+      "id": "pathogen:kpneu",
+      "label": "K. pneumoniae",
+      "full_name": "Klebsiella pneumoniae",
+      "taxid": 573,
+      "who_priority": "Critical",
+      "eskape": "K",
+      "gram": "negative"
+    },
+    {
+      "type": "pathogen",
+      "id": "pathogen:abau",
+      "label": "A. baumannii",
+      "full_name": "Acinetobacter baumannii",
+      "taxid": 470,
+      "who_priority": "Critical",
+      "eskape": "A",
+      "gram": "negative"
+    },
+    {
+      "type": "pathogen",
+      "id": "pathogen:paer",
+      "label": "P. aeruginosa",
+      "full_name": "Pseudomonas aeruginosa",
+      "taxid": 287,
+      "who_priority": "Critical",
+      "eskape": "P",
+      "gram": "negative"
+    },
+    {
+      "type": "pathogen",
+      "id": "pathogen:enter",
+      "label": "Enterobacter spp.",
+      "full_name": "Enterobacter cloacae",
+      "taxid": 550,
+      "who_priority": "Critical",
+      "eskape": "E2",
+      "gram": "negative"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:beta_lactamase",
+      "label": "\u03b2-Lactamase",
+      "aro": "ARO:3000001",
+      "description": "Enzymatic hydrolysis of beta-lactam ring"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:mbl",
+      "label": "Metallo-\u03b2-Lactamase",
+      "aro": "ARO:3000002",
+      "description": "Zinc-dependent hydrolysis of carbapenems; NOT inhibited by avibactam"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:pbp_mod",
+      "label": "PBP Modification",
+      "aro": "ARO:3000003",
+      "description": "Altered penicillin-binding protein reduces beta-lactam affinity"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:van_glycopeptide",
+      "label": "Glycopeptide Target Mod",
+      "aro": "ARO:3000004",
+      "description": "Modified D-Ala-D-Lac peptidoglycan terminus reduces vancomycin binding"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:efflux_rnd",
+      "label": "RND Efflux Pump",
+      "aro": "ARO:3000005",
+      "description": "Resistance-Nodulation-Division tripartite pump; broad-spectrum efflux"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:efflux_mfs",
+      "label": "MFS Efflux Pump",
+      "aro": "ARO:3000006",
+      "description": "Major Facilitator Superfamily transporter; confers drug-specific efflux"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:enz_inactivation",
+      "label": "Enzyme Inactivation",
+      "aro": "ARO:3000007",
+      "description": "Antibiotic inactivated by acetylation, phosphorylation, or methylation"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:target_protection",
+      "label": "Target Protection",
+      "aro": "ARO:3000008",
+      "description": "Protein shields ribosome or topoisomerase from drug binding"
+    },
+    {
+      "type": "mechanism",
+      "id": "mechanism:membrane_perm",
+      "label": "Membrane Permeability",
+      "aro": "ARO:3000009",
+      "description": "Porin loss or outer-membrane remodelling limits drug entry"
+    },
+    {
+      "id": "drug:ampicillin",
+      "type": "drug",
+      "label": "ampicillin",
+      "drug_class": "Penicillin",
+      "aware": "Access"
+    },
+    {
+      "id": "drug:piperacillin_tazobactam",
+      "type": "drug",
+      "label": "piperacillin-tazobactam",
+      "drug_class": "Penicillin",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:ceftazidime",
+      "type": "drug",
+      "label": "ceftazidime",
+      "drug_class": "Cephalosporin",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:ceftriaxone",
+      "type": "drug",
+      "label": "ceftriaxone",
+      "drug_class": "Cephalosporin",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:ceftazidime_avibactam",
+      "type": "drug",
+      "label": "ceftazidime-avibactam",
+      "drug_class": "Cephalosporin",
+      "aware": "Reserve"
+    },
+    {
+      "id": "drug:ceftolozane_tazobactam",
+      "type": "drug",
+      "label": "ceftolozane-tazobactam",
+      "drug_class": "Cephalosporin",
+      "aware": "Reserve"
+    },
+    {
+      "id": "drug:meropenem",
+      "type": "drug",
+      "label": "meropenem",
+      "drug_class": "Carbapenem",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:imipenem",
+      "type": "drug",
+      "label": "imipenem",
+      "drug_class": "Carbapenem",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:meropenem_vaborbactam",
+      "type": "drug",
+      "label": "meropenem-vaborbactam",
+      "drug_class": "Carbapenem",
+      "aware": "Reserve"
+    },
+    {
+      "id": "drug:colistin",
+      "type": "drug",
+      "label": "colistin",
+      "drug_class": "Polymyxin",
+      "aware": "Reserve"
+    },
+    {
+      "id": "drug:vancomycin",
+      "type": "drug",
+      "label": "vancomycin",
+      "drug_class": "Glycopeptide",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:linezolid",
+      "type": "drug",
+      "label": "linezolid",
+      "drug_class": "Oxazolidinone",
+      "aware": "Reserve"
+    },
+    {
+      "id": "drug:ciprofloxacin",
+      "type": "drug",
+      "label": "ciprofloxacin",
+      "drug_class": "Fluoroquinolone",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:amikacin",
+      "type": "drug",
+      "label": "amikacin",
+      "drug_class": "Aminoglycoside",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:tetracycline",
+      "type": "drug",
+      "label": "tetracycline",
+      "drug_class": "Tetracycline",
+      "aware": "Access"
+    },
+    {
+      "id": "drug:azithromycin",
+      "type": "drug",
+      "label": "azithromycin",
+      "drug_class": "Macrolide",
+      "aware": "Watch"
+    },
+    {
+      "id": "drug:chloramphenicol",
+      "type": "drug",
+      "label": "chloramphenicol",
+      "drug_class": "Amphenicol",
+      "aware": "Access"
+    },
+    {
+      "id": "drug:trimethoprim",
+      "type": "drug",
+      "label": "trimethoprim",
+      "drug_class": "Sulfonamide",
+      "aware": "Access"
+    },
+    {
+      "id": "drug:daptomycin",
+      "type": "drug",
+      "label": "daptomycin",
+      "drug_class": "Lipopeptide",
+      "aware": "Reserve"
+    },
+    {
+      "id": "drug:tigecycline",
+      "type": "drug",
+      "label": "tigecycline",
+      "drug_class": "Tetracycline",
+      "aware": "Watch"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF00905",
+      "label": "DD-Transpeptidase",
+      "pfam": "PF00905",
+      "description": "PBP active-site domain; target of all beta-lactams"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF10584",
+      "label": "Class A \u03b2-Lactamase",
+      "pfam": "PF10584",
+      "description": "TEM/SHV/CTX-M serine beta-lactamase fold"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF12697",
+      "label": "Class D \u03b2-Lactamase",
+      "pfam": "PF12697",
+      "description": "OXA-type serine carbapenemase fold"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF12706",
+      "label": "Metallo-\u03b2-Lactamase",
+      "pfam": "PF12706",
+      "description": "Zinc MBL fold; NDM/VIM/IMP family"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF13813",
+      "label": "RND Transporter TM",
+      "pfam": "PF13813",
+      "description": "RND pump transmembrane domain; efflux substrate channel"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF00583",
+      "label": "GNAT Acetyltransferase",
+      "pfam": "PF00583",
+      "description": "GCN5-related N-acetyltransferase; aminoglycoside modification"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF00145",
+      "label": "rRNA Methyltransferase",
+      "pfam": "PF00145",
+      "description": "Erm-type N6-methyltransferase; MLSB resistance"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF12680",
+      "label": "D-Ala-D-Lac Ligase",
+      "pfam": "PF12680",
+      "description": "VanA/VanB ligase domain for glycopeptide resistance"
+    },
+    {
+      "type": "domain",
+      "id": "domain:PF00150",
+      "label": "MFS Core",
+      "pfam": "PF00150",
+      "description": "MFS transporter core fold; drug/H+ antiporter"
+    },
+    {
+      "id": "gene:mecA",
+      "type": "gene",
+      "label": "mecA",
+      "aro": "ARO:3000616",
+      "description": "Encodes PBP2a with low beta-lactam affinity; primary MRSA determinant. SCCmec-borne.",
+      "uniprot": "P0A0D5",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:ermB",
+      "type": "gene",
+      "label": "ermB",
+      "aro": "ARO:3000194",
+      "description": "23S rRNA N6-methyltransferase; MLSB resistance. Inducible or constitutive expression.",
+      "uniprot": "Q8XMD3",
+      "mobilization": "plasmid/transposon"
+    },
+    {
+      "id": "gene:vanA",
+      "type": "gene",
+      "label": "vanA",
+      "aro": "ARO:3000629",
+      "description": "D-Ala-D-Lac ligase in VanA cluster; high-level vancomycin + teicoplanin resistance on Tn1546.",
+      "uniprot": "P37967",
+      "mobilization": "plasmid"
+    },
+    {
+      "id": "gene:vanB",
+      "type": "gene",
+      "label": "vanB",
+      "aro": "ARO:3000630",
+      "description": "VanB-type ligase; low-to-moderate vancomycin resistance only (teicoplanin susceptible).",
+      "uniprot": "Q58734",
+      "mobilization": "chromosomal/plasmid"
+    },
+    {
+      "id": "gene:blaKPC2",
+      "type": "gene",
+      "label": "blaKPC-2",
+      "aro": "ARO:3000013",
+      "description": "Class A carbapenemase; hydrolyzes all beta-lactams including carbapenems. Inhibited by avibactam/vaborbactam.",
+      "uniprot": "Q9F692",
+      "mobilization": "plasmid (Tn4401)"
+    },
+    {
+      "id": "gene:blaNDM1",
+      "type": "gene",
+      "label": "blaNDM-1",
+      "aro": "ARO:3000589",
+      "description": "New Delhi MBL; zinc-dependent carbapenem hydrolysis. NOT inhibited by avibactam. Mobilized globally.",
+      "uniprot": "C7C422",
+      "mobilization": "plasmid (IncA/C, IncF)"
+    },
+    {
+      "id": "gene:blaSHV1",
+      "type": "gene",
+      "label": "blaSHV-1",
+      "aro": "ARO:3000017",
+      "description": "Chromosomally-encoded ESBL precursor; point mutations generate SHV-ESBL variants.",
+      "uniprot": "P0AD63",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:qnrB",
+      "type": "gene",
+      "label": "qnrB",
+      "aro": "ARO:3000491",
+      "description": "Pentapeptide repeat protein; protects DNA gyrase from quinolone. PMQR - plasmid-mediated quinolone resistance.",
+      "uniprot": "A4GYT2",
+      "mobilization": "plasmid"
+    },
+    {
+      "id": "gene:mcr1",
+      "type": "gene",
+      "label": "mcr-1",
+      "aro": "ARO:3003625",
+      "description": "Phosphoethanolamine transferase; adds PEtN to lipid A, reducing colistin affinity. Last-resort drug resistance.",
+      "uniprot": "A0A0E2I7A7",
+      "mobilization": "plasmid (IncI2)"
+    },
+    {
+      "id": "gene:blaOXA51",
+      "type": "gene",
+      "label": "blaOXA-51",
+      "aro": "ARO:3000214",
+      "description": "Intrinsic class D carbapenemase in A. baumannii; ISAba1 insertion upstream drives overexpression.",
+      "uniprot": "Q5P4R4",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:blaOXA23",
+      "type": "gene",
+      "label": "blaOXA-23",
+      "aro": "ARO:3000093",
+      "description": "Acquired OXA-23 carbapenemase; dominant driver of carbapenem resistance in global A. baumannii.",
+      "uniprot": "Q9X3G5",
+      "mobilization": "plasmid/transposon"
+    },
+    {
+      "id": "gene:adeB",
+      "type": "gene",
+      "label": "adeB",
+      "aro": "ARO:3003487",
+      "description": "AdeABC RND pump inner-membrane component; broad substrate range; overexpressed in MDR A. baumannii.",
+      "uniprot": "Q2FEX3",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:mexB",
+      "type": "gene",
+      "label": "mexB",
+      "aro": "ARO:3000676",
+      "description": "MexAB-OprM RND pump; major constitutive MDR efflux in P. aeruginosa. mexB overexpression = nalB-type mutants.",
+      "uniprot": "P52477",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:mexD",
+      "type": "gene",
+      "label": "mexD",
+      "aro": "ARO:3000677",
+      "description": "MexCD-OprJ pump; nfxB mutants overexpress; contributes to fluoroquinolone + macrolide resistance.",
+      "uniprot": "P52478",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:oprD",
+      "type": "gene",
+      "label": "oprD",
+      "aro": "ARO:3001108",
+      "description": "Carbapenem-selective outer membrane porin; loss of oprD confers imipenem resistance without carbapenemase.",
+      "uniprot": "P13791",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:acrB",
+      "type": "gene",
+      "label": "acrB",
+      "aro": "ARO:3000832",
+      "description": "AcrAB-TolC RND pump; constitutive housekeeping MDR efflux in Enterobacteriaceae. Amphipathic substrate tunnel.",
+      "uniprot": "P31224",
+      "mobilization": "chromosomal"
+    },
+    {
+      "id": "gene:sul1",
+      "type": "gene",
+      "label": "sul1",
+      "aro": "ARO:3000412",
+      "description": "Sulfonamide-resistant dihydropteroate synthase variant; integron gene cassette, often on class 1 integrons.",
+      "uniprot": "P0AC16",
+      "mobilization": "integron/plasmid"
+    },
+    {
+      "id": "gene:aacIb",
+      "type": "gene",
+      "label": "aac(6')-Ib",
+      "aro": "ARO:3000325",
+      "description": "Bifunctional AAC(6'); cr-variant acetylates ciprofloxacin at piperazinyl nitrogen \u2014 PMQR via enzymatic inactivation.",
+      "uniprot": "Q5XBD2",
+      "mobilization": "plasmid/integron"
+    },
+    {
+      "id": "gene:tetM",
+      "type": "gene",
+      "label": "tetM",
+      "aro": "ARO:3000186",
+      "description": "Ribosomal protection protein; GTPase displaces tetracycline from 30S A-site. Broad host range on Tn916/Tn1545.",
+      "uniprot": "P04484",
+      "mobilization": "transposon"
+    }
+  ],
+  "edges": [
+    {
+      "source": "gene:mecA",
+      "target": "pathogen:saur",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "mechanism:pbp_mod",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "drug:ampicillin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "drug:piperacillin_tazobactam",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "drug:ceftazidime",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "drug:ceftriaxone",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mecA",
+      "target": "domain:PF00905",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:ermB",
+      "target": "pathogen:saur",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:ermB",
+      "target": "pathogen:efaecium",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:ermB",
+      "target": "mechanism:enz_inactivation",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:ermB",
+      "target": "drug:azithromycin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:ermB",
+      "target": "drug:clarithromycin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:ermB",
+      "target": "domain:PF00145",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanA",
+      "target": "pathogen:efaecium",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanA",
+      "target": "mechanism:van_glycopeptide",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanA",
+      "target": "drug:vancomycin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanA",
+      "target": "drug:daptomycin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanA",
+      "target": "domain:PF12680",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanB",
+      "target": "pathogen:efaecium",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanB",
+      "target": "mechanism:van_glycopeptide",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanB",
+      "target": "drug:vancomycin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:vanB",
+      "target": "domain:PF12680",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "pathogen:enter",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "mechanism:beta_lactamase",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "drug:imipenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "drug:ampicillin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "drug:ceftriaxone",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "drug:piperacillin_tazobactam",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "domain:PF10584",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "pathogen:abau",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "mechanism:mbl",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "drug:imipenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "drug:ampicillin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "drug:ceftazidime",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "drug:ceftriaxone",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaNDM1",
+      "target": "domain:PF12706",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaSHV1",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaSHV1",
+      "target": "mechanism:beta_lactamase",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaSHV1",
+      "target": "drug:ampicillin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaSHV1",
+      "target": "drug:piperacillin_tazobactam",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaSHV1",
+      "target": "domain:PF10584",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:qnrB",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:qnrB",
+      "target": "pathogen:enter",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:qnrB",
+      "target": "mechanism:target_protection",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:qnrB",
+      "target": "drug:ciprofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:qnrB",
+      "target": "drug:levofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mcr1",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mcr1",
+      "target": "pathogen:enter",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mcr1",
+      "target": "mechanism:pbp_mod",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mcr1",
+      "target": "drug:colistin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "pathogen:abau",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "mechanism:beta_lactamase",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "drug:ampicillin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "drug:imipenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "domain:PF12697",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "pathogen:abau",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "mechanism:beta_lactamase",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "drug:imipenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "drug:meropenem_vaborbactam",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "domain:PF12697",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "pathogen:abau",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "mechanism:efflux_rnd",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "drug:ciprofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "drug:tetracycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "drug:amikacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "drug:ceftriaxone",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "drug:chloramphenicol",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "drug:tigecycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:adeB",
+      "target": "domain:PF13813",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "pathogen:paer",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "mechanism:efflux_rnd",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:ciprofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:piperacillin_tazobactam",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:ceftazidime",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:ceftriaxone",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:chloramphenicol",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "drug:tetracycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "domain:PF13813",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "pathogen:paer",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "mechanism:efflux_rnd",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "drug:ciprofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "drug:azithromycin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "drug:chloramphenicol",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "drug:tetracycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "drug:ceftazidime",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexD",
+      "target": "domain:PF13813",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:oprD",
+      "target": "pathogen:paer",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:oprD",
+      "target": "mechanism:membrane_perm",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:oprD",
+      "target": "drug:meropenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:oprD",
+      "target": "drug:imipenem",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "pathogen:enter",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "mechanism:efflux_rnd",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "drug:ciprofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "drug:tetracycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "drug:chloramphenicol",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "drug:ampicillin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "drug:tigecycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:acrB",
+      "target": "domain:PF13813",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:sul1",
+      "target": "pathogen:enter",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:sul1",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:sul1",
+      "target": "mechanism:enz_inactivation",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:sul1",
+      "target": "drug:trimethoprim",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:sul1",
+      "target": "drug:sulfamethoxazole",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:aacIb",
+      "target": "pathogen:kpneu",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:aacIb",
+      "target": "pathogen:enter",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:aacIb",
+      "target": "mechanism:enz_inactivation",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:aacIb",
+      "target": "drug:amikacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:aacIb",
+      "target": "drug:ciprofloxacin",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:aacIb",
+      "target": "domain:PF00583",
+      "type": "has_domain",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:tetM",
+      "target": "pathogen:efaecium",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:tetM",
+      "target": "pathogen:saur",
+      "type": "found_in",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:tetM",
+      "target": "mechanism:target_protection",
+      "type": "confers_resistance_via",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:tetM",
+      "target": "drug:tetracycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:tetM",
+      "target": "drug:doxycycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:tetM",
+      "target": "drug:tigecycline",
+      "type": "confers_resistance_to",
+      "weight": 1.0
+    },
+    {
+      "source": "gene:mexB",
+      "target": "gene:mexD",
+      "type": "co_resistance",
+      "weight": 0.82,
+      "evidence": "RND pump paralogs, same operon family"
+    },
+    {
+      "source": "gene:mexB",
+      "target": "gene:acrB",
+      "type": "co_resistance",
+      "weight": 0.75,
+      "evidence": "RND functional ortholog"
+    },
+    {
+      "source": "gene:mexD",
+      "target": "gene:acrB",
+      "type": "co_resistance",
+      "weight": 0.72,
+      "evidence": "RND functional ortholog"
+    },
+    {
+      "source": "gene:acrB",
+      "target": "gene:adeB",
+      "type": "co_resistance",
+      "weight": 0.7,
+      "evidence": "RND functional ortholog"
+    },
+    {
+      "source": "gene:mexB",
+      "target": "gene:adeB",
+      "type": "co_resistance",
+      "weight": 0.68,
+      "evidence": "RND functional ortholog"
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "gene:blaSHV1",
+      "type": "co_resistance",
+      "weight": 0.65,
+      "evidence": "Co-occurring in KPC plasmids"
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "gene:blaNDM1",
+      "type": "co_resistance",
+      "weight": 0.62,
+      "evidence": "Co-resistance on IncF plasmids"
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "gene:blaOXA23",
+      "type": "co_resistance",
+      "weight": 0.88,
+      "evidence": "OXA carbapenemase homologs, A. baumannii"
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "gene:blaNDM1",
+      "type": "co_resistance",
+      "weight": 0.6,
+      "evidence": "Dual carbapenemase co-occurrence in CRKP"
+    },
+    {
+      "source": "gene:blaOXA23",
+      "target": "gene:adeB",
+      "type": "co_resistance",
+      "weight": 0.74,
+      "evidence": "Co-selected in MDR A. baumannii"
+    },
+    {
+      "source": "gene:vanA",
+      "target": "gene:vanB",
+      "type": "co_resistance",
+      "weight": 0.9,
+      "evidence": "Van cluster homologs"
+    },
+    {
+      "source": "gene:ermB",
+      "target": "gene:tetM",
+      "type": "co_resistance",
+      "weight": 0.62,
+      "evidence": "Co-mobilized on Tn916/Tn1545"
+    },
+    {
+      "source": "gene:qnrB",
+      "target": "gene:aacIb",
+      "type": "co_resistance",
+      "weight": 0.78,
+      "evidence": "PMQR co-selection on plasmids"
+    },
+    {
+      "source": "gene:mcr1",
+      "target": "gene:blaKPC2",
+      "type": "co_resistance",
+      "weight": 0.58,
+      "evidence": "MCR+carbapenemase co-resistance plasmids"
+    },
+    {
+      "source": "gene:sul1",
+      "target": "gene:aacIb",
+      "type": "co_resistance",
+      "weight": 0.8,
+      "evidence": "Class 1 integron co-association"
+    },
+    {
+      "source": "gene:sul1",
+      "target": "gene:qnrB",
+      "type": "co_resistance",
+      "weight": 0.72,
+      "evidence": "PMQR integron co-association"
+    },
+    {
+      "source": "gene:mecA",
+      "target": "gene:ermB",
+      "type": "co_resistance",
+      "weight": 0.68,
+      "evidence": "MRSA SCCmec co-resistance"
+    },
+    {
+      "source": "gene:acrB",
+      "target": "gene:blaKPC2",
+      "type": "co_resistance",
+      "weight": 0.64,
+      "evidence": "MDR co-selection in carbapenem-R Enterobacteriaceae"
+    },
+    {
+      "source": "gene:vanA",
+      "target": "gene:vanB",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF12680"
+    },
+    {
+      "source": "gene:blaKPC2",
+      "target": "gene:blaSHV1",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF10584"
+    },
+    {
+      "source": "gene:blaOXA51",
+      "target": "gene:blaOXA23",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF12697"
+    },
+    {
+      "source": "gene:adeB",
+      "target": "gene:mexB",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF13813"
+    },
+    {
+      "source": "gene:adeB",
+      "target": "gene:mexD",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF13813"
+    },
+    {
+      "source": "gene:adeB",
+      "target": "gene:acrB",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF13813"
+    },
+    {
+      "source": "gene:mexB",
+      "target": "gene:mexD",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF13813"
+    },
+    {
+      "source": "gene:mexB",
+      "target": "gene:acrB",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF13813"
+    },
+    {
+      "source": "gene:mexD",
+      "target": "gene:acrB",
+      "type": "shares_domain",
+      "weight": 0.9,
+      "via": "domain:PF13813"
+    }
+  ]
+}
