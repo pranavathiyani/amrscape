@@ -14,7 +14,7 @@
 <body>
 
 <!-- ── WELCOME OVERLAY (first visit only) ──────────────────────────── -->
-<div class="welcome-overlay" id="welcome-overlay">
+<div class="welcome-overlay" id="welcome-overlay" onclick="if(event.target===this)this.style.display='none'">
   <div class="welcome-modal">
     <div class="welcome-icon">🧬</div>
     <h2 class="welcome-title">AMRscape</h2>
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <button class="welcome-btn" id="welcome-btn">Get Started →</button>
+    <button class="welcome-btn" onclick="document.getElementById('welcome-overlay').style.display='none';if(document.getElementById('welcome-skip-cb').checked)localStorage.setItem('amrscape-welcomed','1')">Get Started →</button>
     <label class="welcome-skip">
       <input type="checkbox" id="welcome-skip-cb"/> Don't show again
     </label>
