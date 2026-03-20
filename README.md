@@ -1,90 +1,73 @@
-# 🧬 AMRscape – ESKAPE Explorer
+<div align="center">
 
-An open-source, static-hosted knowledge graph explorer for Antimicrobial Resistance (AMR) across ESKAPE pathogens. Integrates curated data from CARD, UniProt (Pfam), STRING, and WHO AWARE 2021.
+# 🦠 AMRscape
 
-**Live demo:** `https://<your-github-username>.github.io/amrscape/`
+### Interactive ESKAPE Resistome Comparison Explorer
 
----
+[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue?style=flat-square&logo=github)](https://pranavathiyani.github.io/amrscape/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Data: CARD](https://img.shields.io/badge/Data-CARD%202025-orange?style=flat-square)](https://card.mcmaster.ca)
+[![WHO AWARE](https://img.shields.io/badge/WHO-AWARE%202025-red?style=flat-square)](https://www.who.int/publications/i/item/B09489)
+[![Co-developed with Claude](https://img.shields.io/badge/Co--developed%20with-Claude%20💙-blueviolet?style=flat-square)](https://claude.ai)
 
-## What it shows
+**Compare antibiotic resistance profiles across ESKAPE pathogens — side by side, in your browser.**
 
-| View | Description |
-|------|-------------|
-| **Network** | Force-directed graph — genes, mechanisms, drugs, pathogens, protein domains as nodes; resistance, co-occurrence, domain-sharing as edges |
-| **Resistance Matrix** | Gene × Drug heatmap, colored by resistance mechanism; rows grouped by pathogen, columns by WHO AWARE tier |
-| **Sankey Flow** | AMR information flow: Pathogen → Gene → Mechanism → Drug Class → AWARE Tier |
+[🔬 Live Demo](https://pranavathiyani.github.io/amrscape/) · [🐛 Report a Bug](https://github.com/pranavathiyani/amrscape/issues/new?template=bug_report.md) · [💡 Request a Feature](https://github.com/pranavathiyani/amrscape/issues/new?template=feature_request.md)
 
-### Node types
-| Shape | Type | Source |
-|-------|------|--------|
-| ⭐ Star | Pathogen (ESKAPE) | WHO Priority Pathogen List |
-| ◆ Diamond | Resistance mechanism | CARD ARO ontology |
-| ■ Square | Drug (AWARE-colored) | WHO AWARE 2021 |
-| ● Circle (cyan) | AMR gene | CARD |
-| ● Circle (purple) | Pfam domain | UniProt |
-
-### Edge types
-| Color | Type | Meaning |
-|-------|------|---------|
-| Red dashed | `found_in` | Gene detected in pathogen |
-| Amber solid | `confers_resistance_via` | Gene → mechanism link |
-| Green solid | `confers_resistance_to` | Gene → drug resistance |
-| Purple dotted | `has_domain` | Gene carries Pfam domain |
-| Red solid | `co_resistance` | High-confidence co-selection evidence |
-| Gray dotted | `shares_domain` | Two genes share a Pfam domain |
+</div>
 
 ---
 
-## Data sources
+## What is AMRscape?
 
-| Source | What we use | URL |
-|--------|-------------|-----|
-| **CARD** | ARO accessions, gene names, descriptions | https://card.mcmaster.ca |
-| **UniProt REST API** | Pfam domain cross-references, protein names | https://rest.uniprot.org |
-| **STRING** | Protein–protein interaction scores (≥0.7) | https://string-db.org |
-| **WHO AWARE 2021** | Access / Watch / Reserve classification | hardcoded from WHO publication |
-| **WHO Priority Pathogens 2024** | Critical / High priority labels | hardcoded |
+AMRscape is a static, open-source web tool for **side-by-side comparison of antibiotic resistance gene (ARG) profiles** across ESKAPE pathogens (*Enterococcus faecium*, *Staphylococcus aureus*, *Klebsiella pneumoniae*, *Acinetobacter baumannii*, *Pseudomonas aeruginosa*, *Enterobacter* spp.).
+
+Built entirely on publicly available databases. No server. No login. No data upload required.
 
 ---
 
-## Repo structure
+## Features
 
-```
-amrscape/
-├── .github/
-│   └── workflows/
-│       └── build.yml          # CI: build graph.json + deploy to gh-pages
-├── scripts/
-│   ├── build_graph.py         # Pipeline: seed + CARD/UniProt/STRING enrichment
-│   └── requirements.txt
-├── data/
-│   └── graph.json             # Generated graph (committed as fallback)
-├── js/
-│   ├── app.js                 # State, filters, info panel, routing
-│   ├── force.js               # D3 force-directed view
-│   ├── bipartite.js           # Gene × Drug resistance matrix
-│   └── sankey.js              # Sankey flow (d3-sankey)
-├── css/
-│   └── style.css              # Dark scientific theme
-├── index.html                 # Single-page app
-└── README.md
-```
+| Feature | Description |
+|---------|-------------|
+| **Dual-panel comparison** | Pick any two ESKAPE pathogens and compare resistance profiles side by side |
+| **Mechanism radar** | Spider chart showing which resistance mechanisms dominate each pathogen |
+| **WHO AWARE donut** | Breakdown of affected drugs by Access / Watch / Reserve tier |
+| **Drug class heatmap** | One-row strip showing which drug classes are defeated |
+| **Mobilization pie** | Fraction of ARGs that are mobile (plasmid/transposon) vs chromosomal |
+| **Venn ARG overlap** | Visual count of shared vs unique resistance genes |
+| **★ Therapeutic Escape Index (TEI)** | Novel metric — % of drug classes simultaneously defeated in a co-infection scenario |
+| **Mechanism burden comparison** | Mirrored bar chart comparing mechanism usage between pathogens |
+| **Risk indicators** | HGT transfer risk, last-resort drug exposure alerts |
+| **Gene cards** | Full ARG details — mechanism, drug chips, CARD + UniProt links, mobilization |
+| **Shareable URLs** | Every comparison is bookmarkable via `?l=...&r=...` query params |
+| **Dark / Light mode** | Toggleable, persisted in localStorage |
+| **Citation box** | Plain text / BibTeX / RIS ready-to-copy citations |
 
 ---
 
-## Quick start (local dev)
+## Data Sources
+
+| Source | What we use | Version |
+|--------|-------------|---------|
+| [CARD](https://card.mcmaster.ca) | ARO accessions, gene names, resistance mechanisms | 2025 |
+| [UniProt REST API](https://rest.uniprot.org) | Pfam domain annotations, protein names | Live API |
+| [STRING](https://string-db.org) | Protein–protein interaction scores (≥0.70) | Live API |
+| [WHO AWARE](https://www.who.int/publications/i/item/B09489) | Access / Watch / Reserve classification | 2025 |
+| [WHO Priority Pathogens](https://www.who.int/publications/i/item/9789240093461) | Critical / High priority labels | 2024 |
+
+> ★ **Therapeutic Escape Index (TEI)** is a novel metric developed for AMRscape. It calculates the percentage of WHO-classified drug classes where a co-infection scenario has no shared susceptibility between two pathogens.
+
+---
+
+## Quickstart (local)
 
 ```bash
-git clone https://github.com/<you>/amrscape
+git clone https://github.com/pranavathiyani/amrscape.git
 cd amrscape
 
-# Install Python deps
+# Build graph (seed only — fast, no API calls)
 pip install -r scripts/requirements.txt
-
-# Build graph with live API calls (needs internet)
-python scripts/build_graph.py
-
-# Or use curated seed only (no network, instant)
 python scripts/build_graph.py --seed-only
 
 # Serve locally
@@ -94,26 +77,57 @@ python -m http.server 8080
 
 ---
 
-## GitHub Pages deployment
+## Project Structure
 
-1. Push to `main` branch
-2. Go to **Settings → Pages → Source**: select `GitHub Actions`
-3. The `build.yml` workflow triggers automatically on push and weekly (Monday 02:00 UTC)
-4. Your explorer will be live at `https://<username>.github.io/<repo-name>/`
-
-### Manual trigger
-Go to **Actions → Build AMRscape → Run workflow**  
-Check "seed only" to skip API calls for a fast rebuild.
+```
+amrscape/
+├── index.html               # Single-page app
+├── css/style.css            # All styles (light + dark themes)
+├── js/
+│   ├── app.js               # App logic, data loading, comparisons
+│   └── charts.js            # D3 chart components
+├── data/
+│   └── graph.json           # Knowledge graph (63 nodes, 151 edges)
+├── scripts/
+│   ├── build_graph.py       # Data pipeline — CARD + UniProt + STRING
+│   └── requirements.txt
+└── .github/workflows/
+    └── build.yml            # CI: weekly rebuild + GitHub Pages deploy
+```
 
 ---
 
-## Extending the graph
+## graph.json Schema
 
-### Add more genes
-Edit `GENES` list in `scripts/build_graph.py`:
+```jsonc
+{
+  "metadata": { "node_count": 63, "edge_count": 151, "generated": "ISO8601Z" },
+  "nodes": [
+    {
+      "id": "gene:mecA", "type": "gene",
+      "label": "mecA", "aro": "ARO:3000616",
+      "uniprot": "P0A0D5", "mobilization": "chromosomal"
+    }
+    // types: gene | mechanism | drug | pathogen | domain
+  ],
+  "edges": [
+    { "source": "gene:mecA", "target": "mechanism:pbp_mod",
+      "type": "confers_resistance_via", "weight": 1.0 }
+    // types: found_in | confers_resistance_via | confers_resistance_to
+    //        has_domain | co_resistance | shares_domain
+  ]
+}
+```
+
+---
+
+## Extending AMRscape
+
+### Add a new gene
+Edit the `GENES` list in `scripts/build_graph.py`:
 ```python
 {
-    "id": "gene:blaVIM1",  # must be unique
+    "id": "gene:blaVIM1",
     "label": "blaVIM-1",
     "aro": "ARO:3000156",
     "pathogen_ids": ["pathogen:paer"],
@@ -126,70 +140,48 @@ Edit `GENES` list in `scripts/build_graph.py`:
 },
 ```
 
-### Add CARD prevalence data
-Uncomment and extend `try_enrich_card()` in `build_graph.py` to pull live prevalence stats from `https://card.mcmaster.ca/latest/prevalence`.
+### Rebuild the graph
+```bash
+# Seed only (instant)
+python scripts/build_graph.py --seed-only
 
-### Add more views
-Create `js/myview.js`, add `<div id="view-myview">` in `index.html`, call `MyView.init/update` from `app.js`.
-
----
-
-## graph.json schema
-
-```jsonc
-{
-  "metadata": {
-    "generated": "2025-01-01T00:00:00Z",
-    "version": "0.1.0",
-    "node_count": 63,
-    "edge_count": 151
-  },
-  "nodes": [
-    {
-      "id": "gene:mecA",          // unique node ID
-      "type": "gene",             // gene | mechanism | drug | pathogen | domain
-      "label": "mecA",
-      "aro": "ARO:3000616",       // CARD ARO accession
-      "uniprot": "P0A0D5",
-      "description": "...",
-      "mobilization": "chromosomal"
-    }
-    // type=drug nodes also have: aware, drug_class
-    // type=pathogen nodes also have: full_name, who_priority, gram, taxid
-    // type=domain nodes also have: pfam, description
-  ],
-  "edges": [
-    {
-      "source": "gene:mecA",
-      "target": "mechanism:pbp_mod",
-      "type": "confers_resistance_via",
-      "weight": 1.0
-    }
-  ]
-}
+# With live API enrichment
+python scripts/build_graph.py
 ```
 
 ---
 
 ## Roadmap
 
-- [ ] CARD prevalence table integration (strain-level prevalence %)
+- [ ] Upload hAMRonization TSV — visualize your own resistome data
+- [ ] CARD prevalence data integration (strain-level %)
 - [ ] iModulon expression layer (AMR iModulons from iModulonDB 2.0)
 - [ ] AlphaFold structure links per gene
-- [ ] NCBI HMM domain annotation (Release 19)
 - [ ] Keyword search / jump-to-node
 - [ ] Export filtered subgraph as JSON/CSV
-- [ ] Mobile-responsive layout
 
 ---
 
-## Citation & data licenses
+## Citation
 
-- **CARD** data is available under [CC BY 4.0](https://card.mcmaster.ca/about)
-- **UniProt** data is available under [CC BY 4.0](https://www.uniprot.org/help/license)
-- **STRING** data is available under [CC BY 4.0](https://string-db.org/cgi/access)
-- **WHO AWARE** classification: WHO AWaRe antibiotic list (2021)
+```
+Pranavathiyani G. AMRscape: Interactive ESKAPE Resistome Comparison Explorer.
+2025. Available at: https://pranavathiyani.github.io/amrscape/
+```
 
 ---
 
-*Built with D3.js v7 · d3-sankey · pure static HTML · GitHub Actions · no backend required*
+## Credits
+
+Built entirely on openly and publicly available databases.
+Co-developed with [Claude](https://claude.ai) 💙
+
+**Author:** [Pranavathiyani G](https://pranavathiyani.github.io)
+Assistant Professor (Research), SASTRA Deemed to be University
+Bioinformatics · AMR · Multi-omics · AI/ML Drug Discovery
+
+---
+
+<div align="center">
+<sub>🦠 AMRscape · ESKAPE Resistome Explorer · MIT License</sub>
+</div>
